@@ -1,0 +1,150 @@
+{
+  "project_info": {
+    "project_number": "811194338852",
+    "project_id": "savebirds-e6dcd",
+    "storage_bucket": "savebirds-e6dcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811194338852:android:5dfd50028605bbcbb612b1",
+        "android_client_info": {
+          "package_name": "com.example.savebirds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811194338852-5v2162g6e10ne1fga31flddq3f7dck15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.savebirds",
+            "certificate_hash": "7e3cab5ad8398e5bb6dcc72cfc2c7efc91896b95"
+          }
+        },
+        {
+          "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdJjBrMQ4wzFF9A3pIiFCH2xLdn9kRnSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "811194338852-j6di94oh33kbfcabe6tgtujl3qkqnbrs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.savebirds.saveBirdsAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811194338852:android:ac51296e5ce731a4b612b1",
+        "android_client_info": {
+          "package_name": "com.savebirds.save_birds_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811194338852-sfa8gb5pfkansfr81e2nps6r37ndnaj4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.savebirds.save_birds_admin",
+            "certificate_hash": "df7c4fcb968b082ecb18b075eb2d306cbc715230"
+          }
+        },
+        {
+          "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdJjBrMQ4wzFF9A3pIiFCH2xLdn9kRnSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "811194338852-j6di94oh33kbfcabe6tgtujl3qkqnbrs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.savebirds.saveBirdsAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811194338852:android:7990282f3d10e98cb612b1",
+        "android_client_info": {
+          "package_name": "com.savebirds.volunteers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811194338852-4rc9lrn9fs73f57vmd2n70vqbdq9mnam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.savebirds.volunteers",
+            "certificate_hash": "7966884fa0ff7ccad2f523ffe24670d960a81135"
+          }
+        },
+        {
+          "client_id": "811194338852-sbbujuj4f16btsicmcgqtn33g11kpuqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.savebirds.volunteers",
+            "certificate_hash": "7e3cab5ad8398e5bb6dcc72cfc2c7efc91896b95"
+          }
+        },
+        {
+          "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdJjBrMQ4wzFF9A3pIiFCH2xLdn9kRnSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811194338852-0n971cvb54c3j989jlds88a926p8lgdf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "811194338852-j6di94oh33kbfcabe6tgtujl3qkqnbrs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.savebirds.saveBirdsAdmin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
