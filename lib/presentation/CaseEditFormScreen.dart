@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:getwidget/getwidget.dart';
 
 class CaseEditFormScreen extends StatefulWidget {
@@ -118,7 +119,7 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                         });
                       },
                     ),
-                    Padding(padding: const EdgeInsets.all(10)),
+                    const Padding(padding: EdgeInsets.all(10)),
                     const Text(
                       "Caller Number: ",
                       style: TextStyle(
@@ -159,6 +160,7 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                               .doc(widget.id)
                               .update(Map<Object, dynamic>.from(birdCase));
                           Navigator.of(context).pop();
+                          Fluttertoast.showToast(msg: "Case Updated");
                         },
                         child: const Text("Update"),
                       ),
