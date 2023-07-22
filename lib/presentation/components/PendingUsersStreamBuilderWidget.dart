@@ -15,14 +15,10 @@ class PendingUsersStreamBuilderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: getUserDataStream(_firestore),
+      stream: getPendingUserDataStream(_firestore),
       builder: (context, snapshot) {
-        List allowedUsers = [];
         List pendingUsers = [];
-        List rejectedUsers = [];
-        List allUsers = [];
         List<Widget> pendingUserWidgets = [];
-        late List<Widget> widgetOptions;
         if (!snapshot.hasData) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -32,37 +28,32 @@ class PendingUsersStreamBuilderWidget extends StatelessWidget {
 
         for (var doc in userData) {
           var user = doc.data() as Map<String, dynamic>;
-          allUsers.add(user);
-          if (user["accessStatus"] == "allowed") {
-            allowedUsers.add(user);
-          }
-          if (user["accessStatus"] == "pending") {
-            pendingUsers.add(user);
-            pendingUserWidgets.add(
-              UserCard(userData: user, firestore: _firestore, id: doc.id),
-            );
-          }
-          if (user["accessStatus"] == "rejected") {
-            rejectedUsers.add(user);
-          }
+          pendingUsers.add(user);
+          pendingUserWidgets.add(
+            UserCard(userData: user, firestore: _firestore, id: doc.id),
+          );
         }
 
-        return Center(
-          child: Column(
-            mainAxisAlignment: pendingUserWidgets.isEmpty? MainAxisAlignment.center: MainAxisAlignment.start,
-            children: pendingUserWidgets.isEmpty
-                ? [
-                    const Center(
-                      child: Text(
-                        "No Pending Users",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+        return SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: pendingUserWidgets.isEmpty
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
+              children: pendingUserWidgets.isEmpty
+                  ? [
+                      const Center(
+                        child: Text(
+                          "No Pending Users",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    )
-                  ]
-                : pendingUserWidgets,
+                      )
+                    ]
+                  : pendingUserWidgets,
+            ),
           ),
         );
       },

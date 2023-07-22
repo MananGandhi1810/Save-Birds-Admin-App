@@ -2,9 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:getwidget/getwidget.dart';
 
 class UserCard extends StatefulWidget {
-  const UserCard({super.key, required this.userData, required this.firestore, required this.id});
+  const UserCard(
+      {super.key,
+      required this.userData,
+      required this.firestore,
+      required this.id});
 
   final Map userData;
   final FirebaseFirestore firestore;
@@ -34,26 +39,25 @@ class _UserCardState extends State<UserCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                MaterialButton(
-                    onPressed: () {
-                      if (kDebugMode) {
-                        print(widget.userData);
-                      }
-                      widget.firestore
-                          .collection("Users")
-                          .doc(widget.id)
-                          .update({"accessStatus": "allowed"});
-                      Fluttertoast.showToast(msg: "Volunteer Access Granted");
-                    },
-                    color: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: const Text(
-                      "Allow",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                MaterialButton(
+                GFButton(
+                  onPressed: () {
+                    if (kDebugMode) {
+                      print(widget.userData);
+                    }
+                    widget.firestore
+                        .collection("Users")
+                        .doc(widget.id)
+                        .update({"accessStatus": "allowed"});
+                    Fluttertoast.showToast(msg: "Volunteer Access Granted");
+                  },
+                  color: Colors.green,
+                  shape: GFButtonShape.pills,
+                  child: const Text(
+                    "Allow",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                GFButton(
                     onPressed: () {
                       if (kDebugMode) {
                         print(widget.userData);
@@ -65,9 +69,7 @@ class _UserCardState extends State<UserCard> {
                       Fluttertoast.showToast(msg: "Volunteer Access Rejected");
                     },
                     color: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+                    shape: GFButtonShape.pills,
                     child: const Text(
                       "Reject",
                       style: TextStyle(color: Colors.white),

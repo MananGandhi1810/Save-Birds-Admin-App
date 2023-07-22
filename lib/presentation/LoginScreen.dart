@@ -6,15 +6,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'SplashScreen.dart';
 
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -28,7 +27,8 @@ class _LoginState extends State<Login> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -40,26 +40,35 @@ class _LoginState extends State<Login> {
     UserCredential result = await auth.signInWithCredential(credential);
     User? user = result.user;
     print(_auth.currentUser);
-    var currentUserDetails = _auth.currentUser;
-    try{
-      var userExist = await _firestore.collection("Users").doc(_auth.currentUser?.uid).get().then((doc) async => {
-        if(!(doc.exists)){
-          await _firestore.collection("Users").doc(_auth.currentUser?.uid).set({
-            "name": _auth.currentUser?.displayName,
-            "email": _auth.currentUser?.email,
-            "photoUrl": _auth.currentUser?.photoURL,
-            "phoneNumber": _auth.currentUser?.phoneNumber,
-            "accessStatus": "pending",
-          }).then((value){
-            print("***** User details added to firebase *****".toUpperCase());
-          })
-        }
-      });
-    }catch(e){
+    try {
+      await _firestore
+          .collection("Users")
+          .doc(_auth.currentUser?.uid)
+          .get()
+          .then((doc) async => {
+                if (!(doc.exists))
+                  {
+                    await _firestore
+                        .collection("Users")
+                        .doc(_auth.currentUser?.uid)
+                        .set({
+                      "name": _auth.currentUser?.displayName,
+                      "email": _auth.currentUser?.email,
+                      "photoUrl": _auth.currentUser?.photoURL,
+                      "phoneNumber": _auth.currentUser?.phoneNumber,
+                      "accessStatus": "pending",
+                    }).then((value) {
+                      debugPrint("***** User details added to firebase *****"
+                          .toUpperCase());
+                    })
+                  }
+              });
+    } catch (e) {
       print("FIRESTORE AUTH CREATE USER ERROR ${e}");
     }
     return user;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +79,9 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             // We take the image from the assets
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Image.asset(
               'assets/images/save-birds.png',
               height: 250,
@@ -80,35 +91,31 @@ class _LoginState extends State<Login> {
             ),
             //Texts and Styling of them
             const Text(
-              'Welcome to Save Birds volunteer App !',
+              'Welcome to Save Birds Admin App !',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'A one-stop portal for Save birds volunteers ',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
             const SizedBox(
               height: 30,
             ),
             MaterialButton(
               elevation: 0,
               height: 50,
-              onPressed: () async{
+              onPressed: () async {
                 var user = await signingWithGoogle();
-                print("Printing User ${user}");
-                if(user != null){
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const SplashScreen()));
+                if (user != null) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SplashScreen()));
                 }
               },
               textColor: Colors.white,
               color: Colors.green,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children: <Widget>[
                   Text('Get Started',
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                   Icon(Icons.arrow_forward_ios)
@@ -121,28 +128,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-// CupertinoSlidingSegmentedControl(
-//   children: const <OrderDay, Widget>{
-//     OrderDay.today: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 20.0),
-//       child: Text("Today"),
-//     ),
-//     OrderDay.tomorrow: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 20.0),
-//       child: Text("Tomorrow"),
-//     ),
-//     OrderDay.later: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 20.0),
-//       child: Text("Later"),
-//     ),
-//   },
-//   groupValue: _currentValue,
-//   onValueChanged: (OrderDay? currentVal) {
-//     if (currentVal != null) {
-//       setState(() {
-//         _currentValue = currentVal;
-//       });
-//     }
-//   },
-// ),

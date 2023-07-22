@@ -21,7 +21,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         allVolunteers.add(volunteer.data());
       });
     }
-    debugPrint("all volunteers: ${allVolunteers.toString()}");
   }
 
   @override
@@ -36,10 +35,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       backgroundColor: Colors.lightBlue,
       appBar: AppBar(
         title: const Text("Leaderboard"),
+        backgroundColor: const Color(0xEEF2F8FF),
       ),
-      drawer: const AppDrawer(),
+      drawer: const AppDrawer(currentScreen: "Leaderboard"),
       body: StreamBuilder<QuerySnapshot>(
-        stream: getCaseDataStream(_firestore),
+        stream: getLastMonthCaseDataStream(_firestore),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -72,19 +72,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           volunteers = Map.fromEntries(
             volunteers.entries.toList()..sort((a, b) => b.value - a.value),
           );
-          debugPrint(volunteers.toString());
           return allVolunteers.isEmpty
               ? const CircularProgressIndicator()
               : ListView.builder(
                   itemCount: volunteers.length,
                   itemBuilder: (context, index) {
+                    var _currentVolunteer = allVolunteers
+                        .where((element) =>
+                            element["email"] == volunteers.keys.toList()[index])
+                        .toList()
+                        .first;
                     return Card(
                       child: ListTile(
-                        title: Text(allVolunteers
-                            .where((element) =>
-                                element["email"] ==
-                                volunteers.keys.toList()[index])
-                            .first["name"]),
+                        title: Text(_currentVolunteer["name"]),
                         subtitle:
                             Text(volunteers.values.toList()[index].toString()),
                       ),

@@ -25,8 +25,9 @@ class _PendingUsersScreenState extends State<PendingUsersScreen> {
       backgroundColor: Colors.lightBlue,
       appBar: AppBar(
         title: const Text("Pending Users"),
+        backgroundColor: const Color(0xEEF2F8FF)
       ),
-      drawer: const AppDrawer(),
+      drawer: const AppDrawer(currentScreen: "Pending Users"),
       body: SafeArea(
         child: PendingUsersStreamBuilderWidget(firestore: _firestore),
       ),
