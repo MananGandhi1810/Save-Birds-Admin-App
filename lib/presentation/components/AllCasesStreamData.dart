@@ -12,7 +12,7 @@ class AllCasesStreamData extends StatefulWidget {
 }
 
 class _AllCasesStreamDataState extends State<AllCasesStreamData> {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {

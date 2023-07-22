@@ -19,7 +19,28 @@ class CaseEditFormScreen extends StatefulWidget {
 }
 
 class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
-  Map birdCase = {};
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController _birdTypeController = TextEditingController();
+  final TextEditingController _pickupAddressController =
+      TextEditingController();
+  final TextEditingController _caseTypeController = TextEditingController();
+  final TextEditingController _caseNotesController = TextEditingController();
+  final TextEditingController _callerPhoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _birdTypeController.value =
+        TextEditingValue(text: widget.birdCase["birdName"]);
+    _pickupAddressController.value =
+        TextEditingValue(text: widget.birdCase["pickupAddress"]);
+    _caseTypeController.value =
+        TextEditingValue(text: widget.birdCase["caseType"]);
+    _caseNotesController.value =
+        TextEditingValue(text: widget.birdCase["caseNotes"]);
+    _callerPhoneController.value =
+        TextEditingValue(text: widget.birdCase["callerPhone"]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +57,7 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     const Text(
@@ -44,16 +66,15 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                     TextFormField(
-                      initialValue: widget.birdCase["birdName"],
+                      controller: _birdTypeController,
                       decoration: const InputDecoration(
                         hintText: "Bird Type",
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          if (value.isNotEmpty) {
-                            birdCase["birdName"] = value;
-                          }
-                        });
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter a valid bird type";
+                        }
+                        return null;
                       },
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
@@ -63,16 +84,15 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                     TextFormField(
-                      initialValue: widget.birdCase["pickupAddress"],
+                      controller: _pickupAddressController,
                       decoration: const InputDecoration(
                         hintText: "Pickup Address",
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          if (value.isNotEmpty) {
-                            birdCase["pickupAddress"] = value;
-                          }
-                        });
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter a valid address";
+                        }
+                        return null;
                       },
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
@@ -93,14 +113,12 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                         ),
                       ],
                       onChanged: (value) {
-                        setState(
-                          () {
-                            birdCase["caseType"] = value;
-                          },
-                        );
+                        setState(() {
+                          _caseTypeController.value =
+                              TextEditingValue(text: value.toString());
+                        });
                       },
-                      value:
-                          birdCase["caseType"] ?? widget.birdCase["caseType"],
+                      value: widget.birdCase["caseType"],
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
                     const Text(
@@ -109,15 +127,10 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                     TextFormField(
-                      initialValue: widget.birdCase["caseNotes"],
+                      controller: _caseNotesController,
                       decoration: const InputDecoration(
                         hintText: "Case Notes",
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          birdCase["caseNotes"] = value;
-                        });
-                      },
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
                     const Text(
@@ -126,27 +139,22 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                     TextFormField(
-                      initialValue: widget.birdCase["callerPhone"],
+                      controller: _callerPhoneController,
                       decoration: const InputDecoration(
                         hintText: "Caller Number",
                       ),
                       keyboardType: TextInputType.phone,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            value =
-                                value.replaceAll(" ", "").replaceAll("+91", "");
-                            if (value.isNotEmpty &&
-                                value.length == 10 &&
-                                int.tryParse(value) != null &&
-                                RegExp(
-                                  r"^((\+){0,1}91(\s){0,1}(\-){0,1}(\s){0,1}){0,1}9[0-9](\s){0,1}(\-){0,1}(\s){0,1}[1-9]{1}[0-9]{7}$",
-                                ).hasMatch(value)) {
-                              birdCase["callerPhone"] = value.toString();
-                              debugPrint(birdCase["callerPhone"]);
-                            }
-                          },
-                        );
+                      validator: (value) {
+                        value = value!
+                            .trim()
+                            .replaceAll(" ", "")
+                            .replaceAll("+91", "");
+                        if (value.isEmpty ||
+                            !RegExp(r"^(?:\+91\s?)?[6789]\d{9}$")
+                                .hasMatch(value)) {
+                          return "Please enter a valid phone number";
+                        }
+                        return null;
                       },
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
@@ -155,12 +163,23 @@ class _CaseEditFormScreenState extends State<CaseEditFormScreen> {
                         shape: GFButtonShape.pills,
                         color: Colors.green,
                         onPressed: () {
-                          widget.firestore
-                              .collection("Cases")
-                              .doc(widget.id)
-                              .update(Map<Object, dynamic>.from(birdCase));
-                          Navigator.of(context).pop();
-                          Fluttertoast.showToast(msg: "Case Updated");
+                          if (_formKey.currentState!.validate()) {
+                            widget.firestore
+                                .collection("Cases")
+                                .doc(widget.id)
+                                .update(
+                                  Map<Object, dynamic>.from({
+                                    "birdName": _birdTypeController.text,
+                                    "pickupAddress":
+                                        _pickupAddressController.text,
+                                    "caseType": _caseTypeController.text,
+                                    "caseNotes": _caseNotesController.text,
+                                    "callerPhone": _callerPhoneController.text,
+                                  }),
+                                );
+                            Navigator.of(context).pop();
+                            Fluttertoast.showToast(msg: "Case Updated");
+                          }
                         },
                         child: const Text("Update"),
                       ),

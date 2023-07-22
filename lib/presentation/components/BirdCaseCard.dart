@@ -33,7 +33,8 @@ class _BirdCaseCardState extends State<BirdCaseCard> {
           children: [
             Text(
               "Bird: ${widget.birdCase['birdName']}",
-              style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              style:
+                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             Text("Caller Name: ${widget.birdCase['callerName']}"),
             Text("Caller Number: ${widget.birdCase['callerPhone']}"),
@@ -41,10 +42,17 @@ class _BirdCaseCardState extends State<BirdCaseCard> {
             widget.birdCase["volunteersGoing"] != 0
                 ? Text(
                     "Volunteer Name: ${widget.birdCase['volunteer1']["name"]}${widget.birdCase['volunteer2'] != null ? ", ${widget.birdCase['volunteer2']["name"]}" : ""}",
+                    overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            Text("Notes: ${widget.birdCase['caseNotes']}"),
-            Text("Address: ${widget.birdCase['pickupAddress']}", overflow: TextOverflow.ellipsis,),
+            Text(
+              "Notes: ${widget.birdCase['caseNotes']}",
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              "Address: ${widget.birdCase['pickupAddress']}",
+              overflow: TextOverflow.ellipsis,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -67,7 +75,10 @@ class _BirdCaseCardState extends State<BirdCaseCard> {
                 GFButton(
                   shape: GFButtonShape.pills,
                   onPressed: () {
-                    widget.firestore.collection("cases").doc(widget.id).delete();
+                    widget.firestore
+                        .collection("cases")
+                        .doc(widget.id)
+                        .delete();
                   },
                   text: "Delete",
                   color: Colors.red,

@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:save_birds_admin/presentation/LoginScreen.dart';
 import 'package:save_birds_admin/presentation/SplashScreen.dart';
 
 import 'firebase_options.dart';

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -21,7 +20,6 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   final _auth = FirebaseAuth.instance;
   final GlobalKey _drawerKey = GlobalKey();
-  final _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +66,6 @@ class _AppDrawerState extends State<AppDrawer> {
           ListTile(
             title: const Text("Leaderboard"),
             onTap: () {
-              print(widget.currentScreen);
               if (widget.currentScreen == "Leaderboard") {
                 Navigator.of(context).pop();
               } else {

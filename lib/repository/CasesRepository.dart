@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 getCaseDataStream(FirebaseFirestore firestore) {
   return firestore.collection("Cases").snapshots();
 }

@@ -39,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
     // Once signed in, return the UserCredential
     UserCredential result = await auth.signInWithCredential(credential);
     User? user = result.user;
-    print(_auth.currentUser);
     try {
       await _firestore
           .collection("Users")
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
               });
     } catch (e) {
-      print("FIRESTORE AUTH CREATE USER ERROR ${e}");
+      debugPrint("FIRESTORE AUTH CREATE USER ERROR $e");
     }
     return user;
   }
