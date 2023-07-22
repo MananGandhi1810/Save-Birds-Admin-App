@@ -74,23 +74,26 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           );
           return allVolunteers.isEmpty
               ? const CircularProgressIndicator()
-              : ListView.builder(
-                  itemCount: volunteers.length,
-                  itemBuilder: (context, index) {
-                    var _currentVolunteer = allVolunteers
-                        .where((element) =>
-                            element["email"] == volunteers.keys.toList()[index])
-                        .toList()
-                        .first;
-                    return Card(
-                      child: ListTile(
-                        title: Text(_currentVolunteer["name"]),
-                        subtitle:
-                            Text(volunteers.values.toList()[index].toString()),
-                      ),
-                    );
-                  },
-                );
+              : Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: ListView.builder(
+                    itemCount: volunteers.length,
+                    itemBuilder: (context, index) {
+                      var _currentVolunteer = allVolunteers
+                          .where((element) =>
+                              element["email"] == volunteers.keys.toList()[index])
+                          .toList()
+                          .first;
+                      return Card(
+                        child: ListTile(
+                          title: Text(_currentVolunteer["name"]),
+                          subtitle:
+                              Text(volunteers.values.toList()[index].toString()),
+                        ),
+                      );
+                    },
+                  ),
+              );
         },
       ),
     );
