@@ -73,7 +73,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             volunteers.entries.toList()..sort((a, b) => b.value - a.value),
           );
           return allVolunteers.isEmpty
-              ? const CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: ListView.builder(

@@ -75,8 +75,9 @@ class _BirdCaseCardState extends State<BirdCaseCard> {
                 GFButton(
                   shape: GFButtonShape.pills,
                   onPressed: () {
+                    debugPrint("Delete");
                     widget.firestore
-                        .collection("cases")
+                        .collection("Cases")
                         .doc(widget.id)
                         .delete();
                   },

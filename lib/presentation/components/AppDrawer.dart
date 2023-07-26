@@ -27,42 +27,39 @@ class _AppDrawerState extends State<AppDrawer> {
       key: _drawerKey,
       child: Column(
         children: [
-          GFDrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.lightBlue,
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.lightBlue,
+            ),
+            accountName: Text(
+              _auth.currentUser?.displayName ?? "User",
+              style: const TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
               ),
-              currentAccountPicture: GFAvatar(
-                maxRadius: 50,
-                backgroundImage: _auth.currentUser?.photoURL != null
-                    ? ResizeImage(
-                        NetworkImage(_auth.currentUser!.photoURL!),
-                        width: 50,
-                        height: 50,
-                      )
-                    : const ResizeImage(
-                        AssetImage("assets/images/user.png"),
-                        width: 50,
-                        height: 50,
-                      ) as ImageProvider,
+            ),
+            accountEmail: Text(
+              _auth.currentUser?.email ?? "Email",
+              style: const TextStyle(
+                fontSize: 15.0,
+                color: Colors.white,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _auth.currentUser?.displayName ?? "User",
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  Text(
-                    _auth.currentUser?.email ?? "Email",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ],
-              )),
+            ),
+            currentAccountPicture: GFAvatar(
+              maxRadius: 45,
+              backgroundImage: _auth.currentUser?.photoURL != null
+                  ? ResizeImage(
+                NetworkImage(_auth.currentUser!.photoURL!),
+                width: 50,
+                height: 50,
+              )
+                  : const ResizeImage(
+                AssetImage("assets/images/user.png"),
+                width: 50,
+                height: 50,
+              ) as ImageProvider,
+            ),
+          ),
           ListTile(
             title: const Text("Leaderboard"),
             onTap: () {

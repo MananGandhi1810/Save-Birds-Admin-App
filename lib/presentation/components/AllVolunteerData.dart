@@ -34,7 +34,13 @@ class _AllVolunteerDataState extends State<AllVolunteerData> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 title: Text(userData[index]["name"]),
-                subtitle: Text(userData[index]["email"]),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(userData[index]["email"]),
+                    Text(userData[index]["phoneNumber"]?.toString()?? "No Phone Number Provided"),
+                  ],
+                ),
                 leading: CircleAvatar(
                   backgroundImage: userData[index]["photoUrl"] != null
                       ? NetworkImage(userData[index]["photoUrl"])
